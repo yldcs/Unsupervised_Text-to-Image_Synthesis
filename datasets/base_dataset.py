@@ -16,6 +16,7 @@ class BaseDataset(data.Dataset):
         self._is_for_train = is_for_train
         self._transform_normalize()
         self._vocab = Vocabulary( os.path.join(opt.data_dir, 'assets', opt.word_count))
+        self._load_concept()
 
     @property
     def name(self):
@@ -41,6 +42,22 @@ class BaseDataset(data.Dataset):
         
     def get_transform(self):
         return self._transform
+
+    def _load_concept(self):
+
+        filepath = os.path.join(self._root, 'coco/concepts.names')
+        with open(filepath, 'r') as f:
+            self._concepts_list = [i.strip().lower().split(' ')[-1] for i in list(f)]
+
+        self._concepts_set = set(self._concepts_list)
+
+        self._concepts_dict = {}
+
+        i_concept = 0
+        for concept in self._concepts_list:
+            if concept not in self._concepts_dict:
+                self._concepts_dict[concept] = i_concept
+                i_concept += 1
 
     def _pad(self, seq, ln=20):
         if not isinstance(seq, list):

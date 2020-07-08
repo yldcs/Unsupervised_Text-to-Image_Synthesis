@@ -52,6 +52,11 @@ class BaseModel(object):
     def load(self):
         assert False, 'laod not implemented'
     
+    def _freeze(self, net):
+
+        for p in net.parameters():
+            p.requires_grad = False
+
     def _save_network(self, network, network_label, epoch_label):
         if not os.path.exists(self._save_dir):
             mkdir(self._save_dir)
@@ -82,7 +87,6 @@ class BaseModel(object):
         network.load_state_dict(save_data)
 
         print("Loading net: %s" % load_path)
-
 
     def _load_optimizer(self, optimizer, network_label, epoch_label):
         load_filename = 'opt_%s_epoch_%d' %(network_label, epoch_label) 

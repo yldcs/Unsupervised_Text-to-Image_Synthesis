@@ -25,6 +25,9 @@ class ModelsFactory(object):
             from .DAMSM_train import DAMSMTrain
             model = DAMSMTrain(*args, **kwargs)
 
+        elif model_name in ['VCD_train', 'GSC_train']:
+            from .ut2i_train import UT2ITrain
+            model = UT2ITrain(*args, **kwargs)
         else:
             raise ValueError('Model [%s] could not be recognized' % model_name)
         

@@ -1,7 +1,7 @@
 from .base_dataset import BaseDataset
 from utils.util import load_pickle_file
+import torch
 from torchvision import transforms
-from nltk.tokenize import RegexpTokenizer
 import random
 import os
 import numpy as np
@@ -33,6 +33,18 @@ class COCODataset(BaseDataset):
             self._captions = load_pickle_file('val.pkl')
             self._keys = list(self._captions.keys())
 
+    def _get_concept_labels(self, concepts):
+        
+        concepts_label = torch.zeros(480)
+        if isinstance(concepts, str):
+            concepts = concepts.split(' ')
+        concepts = [self._concepts_dict[i] for i in concepts]
+        concepts = torch.tensor(concepts)
+        concepts_label.scatter_(0, concepts, 1.0)
+        
+        return concepts_label
+        
+        
     def _get_caption_info(self, key):
             
         if self._is_train:
@@ -40,16 +52,19 @@ class COCODataset(BaseDataset):
 
             self._sample['pseudos'], self._sample['pseudo_lens'] = \
                 self._pad(pseudo, 20)
-            self._sample['pseudo_concepts'], self._sample['pseudo_concept_lens'] = \
-                self._pad(pseudo_concepts, 5)
+
+            self._sample['image_concepts'] = self._get_concept_labels(pseudo_concepts)
+            #  self._sample['image_concepts'], self._sample['image_concept_lens'] = \
+                #  self._pad(pseudo_concepts, 5)
 
             ix = random.randint(0, self._corpus_length - 10)
             corpus_concepts, corpus = self._corpus[ix]
-            self._sample['corpus'], self._sample['corpus_len'] = \
+            self._sample['corpus'], self._sample['corpus_lens'] = \
                 self._pad(corpus[1:-1], 20)
 
-            self._sample['corpus_concepts'], self._sample['corpus_len'] =\
-                self._pad(corpus_concepts, 5)
+            #  self._sample['corpus_concepts'], self._sample['corpus_concept_lens'] =\
+                #  self._pad(corpus_concepts, 5)
+            self._sample['corpus_concepts'] = self._get_concept_labels(corpus_concepts)
 
         else:
             caption, concepts = self._captions[key]
@@ -81,8 +96,6 @@ class COCODataset(BaseDataset):
         self._get_caption_info(key)
         self._sample['key'] = key
         self._sample['class_id'] = self._class_id[index]
-
         return self._sample
-
     def __len__(self):
         return len(self._keys)

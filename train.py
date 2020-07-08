@@ -30,14 +30,14 @@ class Train(object):
             # update learning rate
             self._model.update_learning_rate(i_epoch)
 
-            # train epoch
+            #  train epoch
             self._train_epoch(i_epoch)
 
             # save model
-            print('saving the model at the end of epoch %d, iters %d' % 
-                  (i_epoch, self._opt.total_epoch))
-            if i_epoch + 1 % self._opt.epoch_interval == 0:
+            if i_epoch % self._opt.interval_epoch == 0:
                 self._model.save('epoch_%d' % i_epoch)
+                print('saving the model at the end of epoch %d, iters %d' % 
+                      (i_epoch, self._opt.total_epoch))
             
             # print epoch info
             epoch_time = time.time() - epoch_start_time
@@ -57,14 +57,13 @@ class Train(object):
             self._it += 1
 
             elasped = time.time() - batch_start_time
-            if self._it % self._opt.display_interval == 0:
+            if self._it % self._opt.interval_display == 0:
                 self._model.display_terminal(i_epoch, self._opt.total_epoch,
                          i_train_batch, self._total_batches, elasped)
 
-            if self._it + 1 % self._opt.it_interval == 0:
+            if self._it % self._opt.interval_it == 0:
                 self._model.save('it_%d' % self._it)
 
-         
         
 if __name__ == '__main__':
     import warnings

@@ -23,6 +23,11 @@ class OptionFactory(object):
         elif option_name == 'DAMSM':
             from .DAMSM_options import DAMSMOptions
             option = DAMSMOptions()
+
+        elif option_name in ['VCD', 'GSC']:
+            from .ut2i_options import UT2IOptions
+            option = UT2IOptions()
+
         else:
             raise ValueError('Option [%s] not be recognized' % option_name)
 

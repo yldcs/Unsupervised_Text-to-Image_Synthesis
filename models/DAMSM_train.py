@@ -112,8 +112,7 @@ class DAMSMTrain(BaseModel):
         """
         self._save_network(self._rnn, 'text_encoder', label)
         self._save_network(self._cnn, 'image_encoder', label)
-        self._save_optimizer(self._rnn, 'text_encoder', label)
-        self._save_optimizer(self._cnn, 'image_encoder', label)
+        self._save_optimizer(self._optimizer, 'DAMSM', label)
 
     def load(self):
 
