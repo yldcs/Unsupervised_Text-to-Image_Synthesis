@@ -15,6 +15,7 @@ class UT2IOptions(BaseOptions):
         # TRAIN
         self._parser.add_argument('--FLAG', action='store_false')
         self._parser.add_argument('--NET_E', type=str, default='')
+        self._parser.add_argument('--NET_G', type=str, default='')
         self._parser.add_argument('--MAX_EPOCH', type=int, default=600)
         self._parser.add_argument('--SNAPSHOT_INTERVAL', type=int, default=5)
         self._parser.add_argument('--GENERATOR_LR', type=float, default=0.0002)

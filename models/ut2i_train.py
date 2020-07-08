@@ -3,6 +3,7 @@ from utils.util import weights_init
 from networks import NetworksFactory
 import torch
 from copy import deepcopy
+import os
 
 class UT2ITrain(BaseModel):
 
@@ -19,6 +20,7 @@ class UT2ITrain(BaseModel):
         
     def _load_pretrain(self, net, path):
 
+        assert path, 'we can not find pretrained file %s' % path
         state_dict = torch.load(path)
         net.load_state_dict(state_dict)
         print('load pretrain net from %s' % path)
@@ -44,6 +46,12 @@ class UT2ITrain(BaseModel):
 
         for i in range(3):
             self._D[i].apply(weights_init)
+
+        if os.path.exist(self._opt.NET_G):
+            self._load_pretrain(self._G, self._opt.NET_G)
+            for i in range(3):
+                self._load_pretrain(self._D[i],
+                    self._opt.NET_G.replace('G', 'D%d'%i))
 
         self._rnn.cuda()
         self._cnn.cuda()
