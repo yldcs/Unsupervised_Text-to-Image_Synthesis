@@ -1,4 +1,4 @@
-# Unsupervised_Text-to-Image_Synthesis
+# Unsupervised Text-to-Image Synthesis
  Implementation of our PR 2020 paper:Unsupervised Text-to-Image Synthesis 
  
 In this paper, we proposed to train one text-to-image synthesis model in one unsupervised manner, without resorting to any pairwise image-text data. To the best of our knowledge, this is the first attempt to tackle such an unsupervised text-to-image synthesis task. 
