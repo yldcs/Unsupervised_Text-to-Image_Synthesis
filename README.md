@@ -7,8 +7,8 @@ In this paper, we proposed to train one text-to-image synthesis model in one uns
 Python 3.6+, Pytorch 1.2, torchvision 0.4, cuda10.0, at least 3.8GB GPU memory and other requirements. All codes are tested on Linux Distributions (centos 7), and other platforms have not been tested yet.
 
 ## Download resources.
-1. Download `pretrains` from [OneDrive]() or [BaiduPan](https://pan.baidu.com/s/1uNoecbTrZCYT8wP-KEcbTQ) with extract code 5bx6 and then move the pretrains.zip to the assets directory and unzip this file.
-2. Download `data` from [OneDrive]() or [BaiduPan](https://pan.baidu.com/s/1uNoecbTrZCYT8wP-KEcbTQ) with extract code 5bx6 and then move the `data` to the assets directory.
+1. Download `pretrains` from [OneDrive]() or [BaiduPan](https://pan.baidu.com/s/1uNoecbTrZCYT8wP-KEcbTQ) with extract code `5bx6` and then move the pretrains.zip to the assets directory and unzip this file.
+2. Download `data` from [OneDrive]() or [BaiduPan](https://pan.baidu.com/s/1uNoecbTrZCYT8wP-KEcbTQ) with extract code `5bx6` and then move the `data` to the assets directory.
 3. Download `MSCOCO`  from the [COCO  site](https://cocodataset.org/) and extract the train2014.zip and  val2014.zip to `assets/data/coco/images`.
 
 ## Trainging
